@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+using namespace std;
 
 constexpr int ROWS = 20;
 constexpr int COLS = 10;
-constexpr float CELL_SIZE = 30;
+constexpr int CELL_SIZE = 30;
 constexpr int WINDOW_HEIGHT = ROWS * CELL_SIZE;
 constexpr int WINDOW_WIDTH = COLS * CELL_SIZE;
 
