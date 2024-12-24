@@ -1,8 +1,4 @@
-#include <SFML/Graphics.hpp>
-
-constexpr int ROWS = 20;
-constexpr int COLS = 10;
-constexpr float CELL_SIZE = 30;
+#include "Constants.hpp"
 
 class Grid {
 public:

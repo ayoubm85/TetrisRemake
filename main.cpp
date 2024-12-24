@@ -11,7 +11,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		while (const std::optional event = window.pollEvent()) {
+		while (const optional event = window.pollEvent()) {
 			if (event->is<Event::Closed>())
 			{
 				window.close();
