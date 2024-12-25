@@ -1,3 +1,4 @@
+#pragma
 #include "Constants.hpp"
 #include "Shape.hpp"
 

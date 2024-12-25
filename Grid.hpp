@@ -1,13 +1,15 @@
 #include "Constants.hpp"
+#include "Tetriminos.hpp"
 
 class Grid {
 public:
 	Grid();
-	~Grid();
-	void setCell(int x, int y, int color);
-	int get(int x, int y);
-	void draw(sf::RenderWindow* window);
+	~Grid() = default;
+	void setCell(int x, int y, char tetriminosType);
+	char getCell(int x, int y);
+	void drawGrid(sf::RenderWindow* window);
+	void addTetriminosToGrid(const Tetriminos& tetriminos);
 
 private:
-	int grid[ROWS][COLS];
+	char grid[ROWS][COLS];
 };
