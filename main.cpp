@@ -1,13 +1,16 @@
 #include <SFML/Graphics.hpp> 
 #include <SFML/Window.hpp>   
+#include <iostream>
 #include "Grid.hpp"
+#include "Tetriminos.hpp"
+
 
 using namespace sf;
 using namespace std;
 
 int main()
 {
-	RenderWindow window(VideoMode({ 300, 600 }), "Tetris Grid");
+	/*RenderWindow window(VideoMode({ 300, 600 }), "Tetris Grid");
 
 	while (window.isOpen())
 	{
@@ -20,9 +23,48 @@ int main()
 		window.clear();
 		Grid grid;
 		grid.draw(&window);
-		window.display();
+		window.display();*/
 
-	}
+		ShapeTetriminos shape(I, COLORS[1], 'I');
+
+
+		Tetriminos tetriminos(shape, 0, 0, 1);
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cout << tetriminos.getShape().getShape()[i][j] << " ";
+			}
+
+			cout << endl;
+		}
+		
+		tetriminos.rotateClockwise();
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cout << tetriminos.getShape().getShape()[i][j] << " ";
+			}
+
+			cout << endl;
+		}
+
+		tetriminos.rotateCounterClockwise();
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cout << tetriminos.getShape().getShape()[i][j] << " ";
+			}
+
+			cout << endl;
+		}
+
+	//}
 
     return 0;
 }

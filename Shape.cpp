@@ -1,5 +1,16 @@
 #include "Shape.hpp"
 
-Shape::Shape(std::vector<std::vector<int>>& shape, sf::Color color) : shape(shape), color(color) {}
+ShapeTetriminos::ShapeTetriminos(const std::vector<std::vector<int>>& shape, const sf::Color color, const char id) : shape(shape), color(color), id(id) {}
 
-Shape::~Shape() = default;
+const std::vector<std::vector<int>>& ShapeTetriminos::getShape() const {
+	return shape;
+}
+
+char ShapeTetriminos::getId() const {
+	return id;
+}
+
+sf::Color ShapeTetriminos::getColor() const {
+	return color;
+}
+

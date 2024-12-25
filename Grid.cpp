@@ -35,6 +35,7 @@ void Grid::draw(RenderWindow* window)
 		{
 			RectangleShape cell(Vector2f(CELL_SIZE, CELL_SIZE));
 			cell.setPosition(Vector2f(j * CELL_SIZE, i * CELL_SIZE));
+
 			switch (grid[i][j])
 			{
 			case 0:

@@ -1,11 +1,17 @@
+#pragma once
 #include "Constants.hpp"
 
 
-class Shape {
+class ShapeTetriminos {
 public:
-	Shape(std::vector<std::vector<int>>& shape, sf::Color color);
-	~Shape();
+	ShapeTetriminos(const std::vector<std::vector<int>>& shape, const sf::Color color, const char id);
+	~ShapeTetriminos() = default;
+	const std::vector<std::vector<int>>& getShape() const;
+	char getId() const;
+	sf::Color getColor() const;
+
+private:
+	char id;
 	std::vector<std::vector<int>> shape;
 	sf::Color color;
-
 };
