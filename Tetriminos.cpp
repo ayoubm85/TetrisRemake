@@ -1,13 +1,17 @@
+#pragma once
 #include "Tetriminos.hpp"
 #include "Shape.hpp"
+#include <iostream>
 
 using namespace std;
 
 int Tetriminos::instanceCount = 0;
 
-Tetriminos::Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY, const int id) : shape(shape), x(startX), y(startY), id(id) 
+Tetriminos::Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY) : shape(shape), x(startX), y(startY) 
 {
 	counter();
+	id = shape.getId() + to_string(getInstanceCount());
+	cout << id << endl;
 }
 
 void Tetriminos::counter() 
@@ -25,7 +29,7 @@ const ShapeTetriminos& Tetriminos::getShape() const
 	return shape;
 }
 
-char Tetriminos::getId() const 
+string Tetriminos::getId() const 
 {
 	return id;
 }
@@ -45,29 +49,19 @@ void Tetriminos::setShape(const ShapeTetriminos& shape)
 	this->shape = shape;
 }
 
-void Tetriminos::setX(int x) 
-{
-	this->x = x;
-}
-
-void Tetriminos::setY(int y) 
-{
-	this->y = y;
-}
-
 void Tetriminos::moveLeft() 
 {
-	setX(x--);
+	this->y--;
 }
 
 void Tetriminos::moveRight() 
 {
-	setX(x++);
+	y++;
 }
 
 void Tetriminos::moveDown() 
 {
-	setY(y++);
+	this->x++;
 }
 
 void Tetriminos::rotateClockwise()
@@ -100,6 +94,5 @@ void Tetriminos::rotateCounterClockwise()
 			newShape[n - j - 1][i] = currentShape[i][j];
 		}
 	}
-
 	setShape(ShapeTetriminos(newShape, shape.getColor(), shape.getId()));
 }

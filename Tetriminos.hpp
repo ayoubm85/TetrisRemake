@@ -4,14 +4,14 @@
 
 class Tetriminos {
 public:
-	Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY, const int id);
+	Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY);
 	~Tetriminos() = default;
 
 	void counter();
 	int getInstanceCount() const;
 
 	const ShapeTetriminos& getShape() const;
-	char getId() const;
+	string getId() const;
 
 	int getX() const;
 	int getY() const;
@@ -33,6 +33,6 @@ private:
 	static int instanceCount;
 
 	ShapeTetriminos shape;
-	const int id;
+	string id;
 	int x, y;
 };

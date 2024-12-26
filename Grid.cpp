@@ -16,12 +16,12 @@ Grid::Grid()
 }
 
 
-void Grid::setCell(int x, int y, char tetriminosType)
+void Grid::setCell(int x, int y, string tetriminosType)
 {
-	grid[x][y] = tetriminosType;
+	grid[x][y] = tetriminosType;   
 }
 
-char Grid::getCell(int x, int y)
+string Grid::getCell(int x, int y)
 {
 	return grid[x][y];
 }
@@ -35,7 +35,7 @@ void Grid::drawGrid(RenderWindow* window)
 			RectangleShape cell(Vector2f(CELL_SIZE, CELL_SIZE));
 			cell.setPosition(Vector2f(j * CELL_SIZE, i * CELL_SIZE));
 
-			switch (grid[i][j])
+			switch (grid[i][j][0])
 			{
 			case 'E':
 				cell.setFillColor(Color::Black);
@@ -80,8 +80,43 @@ void Grid::addTetriminosToGrid(const Tetriminos& tetriminos)
 		{
 			if (shape.getShape()[i][j] == 1)
 			{
-				Grid::setCell(i + x, j + y, shape.getId());
+				Grid::setCell(i + x, j + y, tetriminos.getId());
 			}
 		}
 	}
+}
+
+void Grid::updateGrid(const Tetriminos& tetriminos, RenderWindow* window) 
+{
+	for (int i = 0; i < ROWS; i++) 
+	{
+		for (int j = 0; j < COLS; j++) 
+		{
+			if (grid[i][j] == tetriminos.getId())
+			{
+				grid[i][j] = 'E';
+			}
+		}
+	}
+	addTetriminosToGrid(tetriminos);
+}
+
+bool Grid::isValidMove(const Tetriminos& tetriminos, int dx, int dy)
+{
+	for (int i = 0; i < tetriminos.getShape().getShape().size(); i++)
+	{
+		for (int j = 0; j < tetriminos.getShape().getShape().size(); j++)
+		{
+			if (tetriminos.getShape().getShape()[i][j] == 1)
+			{
+				const int newX = tetriminos.getX() + dx + i;
+				const int newY = tetriminos.getY() + dy + j;
+				if (newX < 0 || newX >= ROWS || newY < 0 || newY >= COLS || (grid[newX][newY] != 'E' && grid[newX][newY] != tetriminos.getId()))
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
