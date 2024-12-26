@@ -3,8 +3,6 @@
 #include <iostream>
 #include "Grid.hpp"
 
-
-
 using namespace sf;
 using namespace std;
 
@@ -16,28 +14,30 @@ int main()
 	Tetriminos tetriminos(shape1, 2, 1);
 	Tetriminos tetriminos2(shape2, 5, 4);
 	Grid grid;
+
 	while (window.isOpen())
 	{
-		while (const optional event = window.pollEvent()) {
+		while (const optional event = window.pollEvent()) 
+		{
 			if (event->is<Event::Closed>())
 			{
 				window.close();
 			}
 			if (event->is<Event::KeyPressed>()) {
-				if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Left) {
-					if (grid.isValidMove(tetriminos, 0, -1)) {
+				if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Left) 
+				{
+					if (grid.isValidMove(tetriminos, 0, -1)) 
 						tetriminos.moveLeft();
-					}
 				}
-				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Right) {
-					if (grid.isValidMove(tetriminos, 0, 1)) {
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Right) 
+				{
+					if (grid.isValidMove(tetriminos, 0, 1)) 
 						tetriminos.moveRight();
-					}
 				}
-				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Down) {
-					if (grid.isValidMove(tetriminos, 1, 0)) {
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Down) 
+				{
+					if (grid.isValidMove(tetriminos, 1, 0))
 						tetriminos.moveDown();
-					}
 				}
 				grid.updateGrid(tetriminos, &window);
 			}
@@ -47,8 +47,6 @@ int main()
 		grid.addTetriminosToGrid(tetriminos);
 		grid.drawGrid(&window);
 		window.display();
-
 	}
-
     return 0;
 }

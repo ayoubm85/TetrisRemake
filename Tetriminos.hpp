@@ -16,10 +16,7 @@ public:
 	int getX() const;
 	int getY() const;
 
-
 	void setShape(const ShapeTetriminos& shape);
-	void setX(int x);
-	void setY(int y);
 
 	void moveLeft();
 	void moveRight();

@@ -51,7 +51,7 @@ void Tetriminos::setShape(const ShapeTetriminos& shape)
 
 void Tetriminos::moveLeft() 
 {
-	this->y--;
+	y--;
 }
 
 void Tetriminos::moveRight() 
@@ -61,7 +61,7 @@ void Tetriminos::moveRight()
 
 void Tetriminos::moveDown() 
 {
-	this->x++;
+	x++;
 }
 
 void Tetriminos::rotateClockwise()
@@ -77,7 +77,6 @@ void Tetriminos::rotateClockwise()
 			newShape[j][n - i - 1] = currentShape[i][j];
 		}
 	}
-
 	setShape(ShapeTetriminos(newShape, shape.getColor(), shape.getId()));
 }
 

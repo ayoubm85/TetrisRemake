@@ -15,7 +15,6 @@ Grid::Grid()
 	}
 }
 
-
 void Grid::setCell(int x, int y, string tetriminosType)
 {
 	grid[x][y] = tetriminosType;   
