@@ -119,3 +119,52 @@ bool Grid::isValidMove(const Tetriminos& tetriminos, int dx, int dy)
 	}
 	return true;
 }
+
+
+void Grid::clearFullLines()
+{
+	for (int i = 0; i < ROWS; i++)
+	{
+		bool isLineFull = true;
+		for (int j = 0; j < COLS; j++)
+		{
+			if (grid[i][j][0] == 'E')
+			{
+				isLineFull = false;
+				break;
+			}
+		}
+
+		if (isLineFull)
+		{
+			for (int k = i; k > 0; k--)
+			{
+				for (int j = 0; j < COLS; j++)
+				{
+					grid[k][j] = grid[k - 1][j];
+				}
+			}
+
+			for (int j = 0; j < COLS; j++)
+			{
+				grid[0][j] = 'E';
+			}
+		}
+	}
+}
+
+void Grid::resetGrid()
+{
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			grid[i][j] = 'E';
+		}
+	}
+}
+
+bool Grid::isGameOver(const Tetriminos& nextTetriminos)
+{
+	return !isValidMove(nextTetriminos, 0, 0);
+}

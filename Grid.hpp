@@ -11,6 +11,9 @@ public:
 	void addTetriminosToGrid(const Tetriminos& tetriminos);
 	void updateGrid(const Tetriminos& tetriminos, sf::RenderWindow* window);
 	bool isValidMove(const Tetriminos& tetriminos, int x, int y);
+	void clearFullLines();
+	void resetGrid();
+	bool isGameOver(const Tetriminos& nextTetriminos);
 
 private:
 	string grid[ROWS][COLS];
