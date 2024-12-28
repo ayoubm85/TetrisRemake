@@ -49,10 +49,8 @@ void Game::initialize()
 	nextTetriminos = generateRandomTetriminos();
 
 	scoreManager.resetScore();
-	//InputHandler
 
 	dropInterval = 0.5f;
-	elapsedDropTime = 0.0f;
 }
 
 Tetriminos Game::generateRandomTetriminos()
@@ -72,12 +70,40 @@ void Game::spawnTetriminos()
 
 void Game::fixActiveTetriminos()
 {
-
+	grid.clearFullLines();
+	spawnTetriminos();
+	if (checkGameOver()) {
+		endGame();
+	}
 }
 
 void Game::processInputs()
 {
-
+	while (const optional event = window.pollEvent())
+	{
+		if (event->is<Event::Closed>())
+		{
+			window.close();
+		}
+		if (event->is<Event::KeyPressed>()) {
+			if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Left)
+			{
+				if (grid.isValidMove(currentTetriminos, 0, -1))
+					currentTetriminos.moveLeft();
+			}
+			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Right)
+			{
+				if (grid.isValidMove(currentTetriminos, 0, 1))
+					currentTetriminos.moveRight();
+			}
+			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Down)
+			{
+				if (grid.isValidMove(currentTetriminos, 1, 0))
+					currentTetriminos.moveDown();
+			}
+			grid.updateGrid(currentTetriminos, &window);
+		}
+	}
 }
 
 void Game::pauseGame()
@@ -112,6 +138,45 @@ void Game::endGame()
 	isGameOver = true;
 }
 
+
+
+void Game::updateDropLogic()
+{
+	if (dropClock.getElapsedTime().asSeconds() >= dropInterval)
+	{
+		if (grid.isValidMove(currentTetriminos, 1, 0))
+		{
+			currentTetriminos.moveDown();
+			grid.updateGrid(currentTetriminos, &window);
+		}
+		else
+		{
+			fixActiveTetriminos();
+		}
+	}
+	dropClock.restart();
+}
+
+void Game::render() 
+{
+	window.clear();
+
+	grid.addTetriminosToGrid(currentTetriminos);
+	grid.drawGrid(&window);
+
+	window.draw(scoreText);
+	window.draw(levelText);
+	window.draw(titleText);
+
+	if (checkGameOver())
+	{
+		window.draw(gameOverText);
+		endGame();
+	}
+
+	window.display();
+}
+
 void Game::run()
 {
 	while (window.isOpen())
@@ -119,7 +184,9 @@ void Game::run()
 		processInputs();
 		if (!isGamePaused && !isGameOver)
 		{
-
+			updateDropLogic();
 		}
+
+		render();
 	}
 }

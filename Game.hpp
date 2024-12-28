@@ -9,6 +9,7 @@ public:
 	Game(Grid& grid, InputHandler& inputHandler, ScoreManager& scoreManager);
 	~Game() = default;
 	void initialize();
+	void render();
 	void run();
 
 	Tetriminos generateRandomTetriminos();
@@ -16,12 +17,12 @@ public:
 	void fixActiveTetriminos();
 
 	void processInputs();
+	void updateDropLogic();
 
 	void pauseGame();
-
 	void resumeGame();
 	void resetGame();
-
+	
 	bool checkGameOver();
 	void endGame();
 
@@ -38,7 +39,6 @@ private:
 	bool isGamePaused;
 
 	float dropInterval;
-	float elapsedDropTime;
 	sf::Clock dropClock;
 
 	Font font;
