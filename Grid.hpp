@@ -1,3 +1,4 @@
+#pragma once
 #include "Constants.hpp"
 #include "Tetriminos.hpp"
 

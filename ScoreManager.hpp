@@ -1,14 +1,15 @@
 
 class ScoreManager {
 public:
-	ScoreManager();
+	ScoreManager() = default;
 	~ScoreManager() = default;
-	void addScore(int score);
-	int getScore() const;
-	void resetScore();
+
 
 
 
 
 private:
+	int score;
+	int lines;
+	int level;
 };

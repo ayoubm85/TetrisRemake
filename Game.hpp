@@ -1,12 +1,12 @@
 #include "Constants.hpp"
 #include "Grid.hpp"
-#include "InputHandler.hpp"
 #include "ScoreManager.hpp"
-
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 class Game {
 public:
-	Game(Grid& grid, InputHandler& inputHandler, ScoreManager& scoreManager);
+	Game(Grid& grid, ScoreManager& scoreManager);
 	~Game() = default;
 	void initialize();
 	void render();
@@ -28,7 +28,6 @@ public:
 
 private:
 	Grid grid;
-	InputHandler inputHandler;
 	ScoreManager scoreManager;
 	sf::RenderWindow window;
 
@@ -41,6 +40,6 @@ private:
 	float dropInterval;
 	sf::Clock dropClock;
 
-	Font font;
-	Text scoreText, levelText, pauseText, gameOverText, titleText;
+	sf::Font font;
+	sf::Text scoreText, levelText, pauseText, gameOverText, titleText;
 };

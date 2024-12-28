@@ -1,12 +1,14 @@
 #include "Game.hpp"
 #include <random>
+#include <iostream>
 
 
 using namespace std;
 using namespace sf;
 
-Game::Game(Grid& grid, InputHandler& inputHandler, ScoreManager& scoreManager)
-: grid(grid), inputHandler(inputHandler), scoreManager(scoreManager), isGameOver(false), isGamePaused(false) {
+Game::Game(Grid& grid, ScoreManager& scoreManager)
+	: grid(grid), scoreManager(scoreManager), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, "")
+{
 	initialize();
 }
 
@@ -47,8 +49,6 @@ void Game::initialize()
 	grid.resetGrid();
 	currentTetriminos = generateRandomTetriminos();
 	nextTetriminos = generateRandomTetriminos();
-
-	scoreManager.resetScore();
 
 	dropInterval = 0.5f;
 }
@@ -101,6 +101,20 @@ void Game::processInputs()
 				if (grid.isValidMove(currentTetriminos, 1, 0))
 					currentTetriminos.moveDown();
 			}
+			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::L)
+			{
+				Tetriminos tempCurrentTetriminos = currentTetriminos;
+
+				if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
+					currentTetriminos.rotateClockwise();
+			}
+			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::J)
+			{
+				Tetriminos tempCurrentTetriminos = currentTetriminos;
+
+				if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
+					currentTetriminos.rotateCounterClockwise();
+			}
 			grid.updateGrid(currentTetriminos, &window);
 		}
 	}
@@ -119,9 +133,9 @@ void Game::resumeGame()
 void Game::resetGame()
 {
 	grid.resetGrid();
-	scoreManager.resetScore();
-	scoreManager.resetLines();
-	scoreManager.resetLevel();
+	//scoreManager.resetScore();
+	//scoreManager.resetLines();
+	//scoreManager.resetLevel();
 	currentTetriminos = generateRandomTetriminos();
 	nextTetriminos = generateRandomTetriminos();
 	isGameOver = false;
@@ -142,8 +156,10 @@ void Game::endGame()
 
 void Game::updateDropLogic()
 {
+	cout << dropClock.getElapsedTime().asSeconds() << endl;
 	if (dropClock.getElapsedTime().asSeconds() >= dropInterval)
 	{
+		cout << "Move down" << endl;
 		if (grid.isValidMove(currentTetriminos, 1, 0))
 		{
 			currentTetriminos.moveDown();
@@ -153,8 +169,8 @@ void Game::updateDropLogic()
 		{
 			fixActiveTetriminos();
 		}
+		dropClock.restart();
 	}
-	dropClock.restart();
 }
 
 void Game::render() 
@@ -168,17 +184,19 @@ void Game::render()
 	window.draw(levelText);
 	window.draw(titleText);
 
-	if (checkGameOver())
-	{
-		window.draw(gameOverText);
-		endGame();
-	}
+	//if (checkGameOver())
+	//{
+	//	cout << "CheckGameOver" << endl;
+	//	window.draw(gameOverText);
+	//	endGame();
+	//}
 
 	window.display();
 }
 
 void Game::run()
 {
+	dropClock.start();
 	while (window.isOpen())
 	{
 		processInputs();
@@ -186,7 +204,6 @@ void Game::run()
 		{
 			updateDropLogic();
 		}
-
 		render();
 	}
 }
