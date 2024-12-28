@@ -7,6 +7,9 @@ using namespace std;
 
 int Tetriminos::instanceCount = 0;
 
+Tetriminos::Tetriminos() : shape(ShapeTetriminos(E, sf::Color::Black, 'E')), x(0), y(0) 
+{}
+
 Tetriminos::Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY) : shape(shape), x(startX), y(startY) 
 {
 	counter();

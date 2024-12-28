@@ -4,6 +4,7 @@
 
 class Tetriminos {
 public:
+	Tetriminos();
 	Tetriminos(const ShapeTetriminos& shape, const int startX, const int startY);
 	~Tetriminos() = default;
 
