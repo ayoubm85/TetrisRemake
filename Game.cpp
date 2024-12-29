@@ -1,13 +1,13 @@
 #include "Game.hpp"
 #include <random>
 #include <iostream>
-
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 using namespace sf;
 
 Game::Game(Grid& grid, ScoreManager& scoreManager)
-	: grid(grid), scoreManager(scoreManager), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, "")
+	: grid(grid), scoreManager(scoreManager), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, ""), font()
 {
 	initialize();
 }
@@ -16,7 +16,7 @@ void Game::initialize()
 {
 	window.create(VideoMode({ WINDOW_WIDTH, WINDOW_HEIGHT }), "Tetris");
 
-	font.openFromFile("arial.ttf");
+	font.openFromFile("C:\\Users\\amarf\\Desktop\\ProjetTetris\\tetrisProject\\x64\\Debug\\8514oem.ttf");
 
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(24);
@@ -66,6 +66,10 @@ void Game::spawnTetriminos()
 {
 	currentTetriminos = nextTetriminos;
 	nextTetriminos = generateRandomTetriminos();
+	if (checkGameOver())
+	{
+		endGame();
+	}
 }
 
 void Game::fixActiveTetriminos()
@@ -85,37 +89,46 @@ void Game::processInputs()
 		{
 			window.close();
 		}
-		if (event->is<Event::KeyPressed>()) {
-			if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Left)
+		else if (event->is<Event::KeyPressed>()) 
+		{
+			if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Space)
 			{
-				if (grid.isValidMove(currentTetriminos, 0, -1))
-					currentTetriminos.moveLeft();
+				isGamePaused = !isGamePaused;
 			}
-			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Right)
+			else if (!isGamePaused && !isGameOver)
 			{
-				if (grid.isValidMove(currentTetriminos, 0, 1))
-					currentTetriminos.moveRight();
-			}
-			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Down)
-			{
-				if (grid.isValidMove(currentTetriminos, 1, 0))
-					currentTetriminos.moveDown();
-			}
-			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::L)
-			{
-				Tetriminos tempCurrentTetriminos = currentTetriminos;
+				if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Left)
+				{
+					if (grid.isValidMove(currentTetriminos, 0, -1))
+						currentTetriminos.moveLeft();
+				}
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Right)
+				{
+					if (grid.isValidMove(currentTetriminos, 0, 1))
+						currentTetriminos.moveRight();
+				}
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::Down)
+				{
+					if (grid.isValidMove(currentTetriminos, 1, 0))
+						currentTetriminos.moveDown();
+				}
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::L)
+				{
+					Tetriminos tempCurrentTetriminos = currentTetriminos;
 
-				if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
-					currentTetriminos.rotateClockwise();
-			}
-			else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::J)
-			{
-				Tetriminos tempCurrentTetriminos = currentTetriminos;
+					if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
+						currentTetriminos.rotateClockwise();
+				}
+				else if (event->getIf<Event::KeyPressed>()->code == Keyboard::Key::J)
+				{
+					Tetriminos tempCurrentTetriminos = currentTetriminos;
 
-				if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
-					currentTetriminos.rotateCounterClockwise();
+					if (grid.isValidMove(tempCurrentTetriminos, 1, 1))
+						currentTetriminos.rotateCounterClockwise();
+				}
+				grid.updateGrid(currentTetriminos, &window);
 			}
-			grid.updateGrid(currentTetriminos, &window);
+			
 		}
 	}
 }
@@ -123,6 +136,7 @@ void Game::processInputs()
 void Game::pauseGame()
 {
 	isGamePaused = true;
+	window.draw(pauseText);
 }
 
 void Game::resumeGame()
@@ -132,34 +146,32 @@ void Game::resumeGame()
 
 void Game::resetGame()
 {
+	isGameOver = false;
+	isGamePaused = false;
 	grid.resetGrid();
 	//scoreManager.resetScore();
 	//scoreManager.resetLines();
 	//scoreManager.resetLevel();
 	currentTetriminos = generateRandomTetriminos();
 	nextTetriminos = generateRandomTetriminos();
-	isGameOver = false;
-	isGamePaused = false;
 }
 
 bool Game::checkGameOver()
 {
-	return grid.isGameOver(nextTetriminos);
+	return grid.isGameOver(currentTetriminos);
 }
 
 void Game::endGame()
 {
 	isGameOver = true;
+	window.draw(gameOverText);
+	cout << "Game Over" << endl;
 }
-
-
 
 void Game::updateDropLogic()
 {
-	cout << dropClock.getElapsedTime().asSeconds() << endl;
 	if (dropClock.getElapsedTime().asSeconds() >= dropInterval)
 	{
-		cout << "Move down" << endl;
 		if (grid.isValidMove(currentTetriminos, 1, 0))
 		{
 			currentTetriminos.moveDown();
@@ -179,19 +191,9 @@ void Game::render()
 
 	grid.addTetriminosToGrid(currentTetriminos);
 	grid.drawGrid(&window);
-
 	window.draw(scoreText);
 	window.draw(levelText);
 	window.draw(titleText);
-
-	//if (checkGameOver())
-	//{
-	//	cout << "CheckGameOver" << endl;
-	//	window.draw(gameOverText);
-	//	endGame();
-	//}
-
-	window.display();
 }
 
 void Game::run()
@@ -204,6 +206,15 @@ void Game::run()
 		{
 			updateDropLogic();
 		}
+		while (isGameOver && !isGamePaused)
+		{
+			processInputs();
+			if (isGamePaused) 
+			{
+				resetGame();
+			}
+		}
 		render();
+		window.display();
 	}
 }
