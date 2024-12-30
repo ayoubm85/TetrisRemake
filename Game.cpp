@@ -1,13 +1,15 @@
 #include "Game.hpp"
 #include <random>
 #include <iostream>
+#include <format>
 #include <SFML/Graphics.hpp>
+
 
 using namespace std;
 using namespace sf;
 
-Game::Game(Grid& grid, ScoreManager& scoreManager)
-	: grid(grid), scoreManager(scoreManager), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, "")
+Game::Game(Grid& grid)
+	: grid(grid), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, ""), infoText(font, "")
 {
 	initialize();
 }
@@ -23,18 +25,16 @@ void Game::initialize()
 	scoreText.setCharacterSize(30);
 	scoreText.setFillColor(Color::White);
 	scoreText.setPosition({ 400, 150 });
-	scoreText.setString("SCORE: 0");
 
 	levelText.setFont(font);
 	levelText.setCharacterSize(30);
 	levelText.setFillColor(Color::White);
 	levelText.setPosition({ 400, 100 });
-	levelText.setString("LEVEL: 1");
 
 	pauseText.setFont(font);
 	pauseText.setCharacterSize(30);
 	pauseText.setFillColor(Color::White);
-	pauseText.setPosition({ 400, 615 });
+	pauseText.setPosition({ 400, 650 });
 	pauseText.setString("PAUSED");
 
 	gameOverText.setFont(font);
@@ -49,11 +49,16 @@ void Game::initialize()
 	titleText.setPosition({ 250, 20 });
 	titleText.setString("TETRIS");
 
+	infoText.setFont(font);
+	infoText.setCharacterSize(30);
+	infoText.setFillColor(Color::White);
+	infoText.setPosition({ 175, 730 });
+
 	grid.resetGrid();
 	currentTetriminos = generateRandomTetriminos();
 	nextTetriminos = generateRandomTetriminos();
 
-	dropInterval = 0.5f;
+	dropInterval = grid.getScoreManager().getDropInterval();
 }
 
 Tetriminos Game::generateRandomTetriminos()
@@ -67,15 +72,10 @@ Tetriminos Game::generateRandomTetriminos()
 
 void Game::spawnTetriminos()
 {
+	grid.clearFullLines();
 	currentTetriminos = nextTetriminos;
 	nextTetriminos = generateRandomTetriminos();
 	checkGameOver();
-}
-
-void Game::fixActiveTetriminos()
-{
-	grid.clearFullLines();
-	spawnTetriminos();
 }
 
 void Game::processInputs()
@@ -135,9 +135,7 @@ void Game::resetGame()
 	isGameOver = false;
 	isGamePaused = false;
 	grid.resetGrid();
-	//scoreManager.resetScore();
-	//scoreManager.resetLines();
-	//scoreManager.resetLevel();
+	scoreManager.reset();
 	currentTetriminos = generateRandomTetriminos();
 	nextTetriminos = generateRandomTetriminos();
 }
@@ -161,7 +159,7 @@ void Game::updateDropLogic()
 		}
 		else
 		{
-			fixActiveTetriminos();
+			spawnTetriminos();
 		}
 		dropClock.restart();
 	}
@@ -169,9 +167,8 @@ void Game::updateDropLogic()
 
 void Game::render() 
 {
-	cout << "rendering" << endl;
 	window.clear();
-	/*sf::Texture windowTexture("abstract_pixel_design_3.jpg");*/
+
 	sf::Texture windowTexture("pixel_backround.jpg");
 	sf::Sprite windowBackground(windowTexture);
 	windowBackground.setScale(
@@ -180,19 +177,31 @@ void Game::render()
 		}
 	);
 	window.draw(windowBackground);
+
 	grid.addTetriminosToGrid(currentTetriminos);
 	grid.drawGrid(&window);
+
+	scoreText.setString(format("SCORE: {}", grid.getScoreManager().getScore()));
+	levelText.setString(format("LEVEL: {}", grid.getScoreManager().getLevel()));
+	
+
 	window.draw(scoreText);
 	window.draw(levelText);
 	window.draw(titleText);
+	window.draw(infoText);
+	if (!isGamePaused && !isGameOver)
+	{
+		infoText.setString("Press SPACE to pause");
+	}
 	if (isGamePaused)
 	{
 		window.draw(pauseText);
+		infoText.setString("Press SPACE to resume");
 	}
 	if (isGameOver)
 	{
-		cout << "game over" << endl;
 		window.draw(gameOverText);
+		infoText.setString("Press SPACE to restart");
 	}
 	window.display();
 }

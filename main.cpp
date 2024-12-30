@@ -9,12 +9,15 @@ using namespace std;
 
 int main()
 {
-	Grid grid(50, 100);
-	ScoreManager scoreManager;
-	Game game(grid, scoreManager);
+	ScoreManager* scoreManager = new ScoreManager();
+	Grid* grid = new Grid(50, 100, *scoreManager);
+	Game* game = new Game(*grid);
 
-	game.run();
+	game->run();
 
+	delete game;
+	delete grid;
+	delete scoreManager;
 
     return 0;
 }

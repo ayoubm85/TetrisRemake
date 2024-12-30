@@ -14,7 +14,6 @@ Tetriminos::Tetriminos(const ShapeTetriminos& shape, const int startX, const int
 {
 	counter();
 	id = shape.getId() + to_string(getInstanceCount());
-	cout << id << endl;
 }
 
 void Tetriminos::counter() 

@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-Grid::Grid(int offsetX, int offsetY) : offsetX(offsetX), offsetY(offsetY)
+Grid::Grid(int offsetX, int offsetY, ScoreManager scoreManager) : offsetX(offsetX), offsetY(offsetY), scoreManager(scoreManager)
 {
 	for (int i = 0; i < ROWS; i++)
 	{
@@ -23,6 +23,11 @@ void Grid::setCell(int x, int y, string tetriminosType)
 string Grid::getCell(int x, int y)
 {
 	return grid[x][y];
+}
+
+ScoreManager Grid::getScoreManager() const
+{
+	return scoreManager;
 }
 
 void Grid::drawGrid(RenderWindow* window)
@@ -120,9 +125,9 @@ bool Grid::isValidMove(const Tetriminos& tetriminos, int dx, int dy)
 	return true;
 }
 
-
 void Grid::clearFullLines()
 {
+	int linesCleared = 0;
 	for (int i = 0; i < ROWS; i++)
 	{
 		bool isLineFull = true;
@@ -149,8 +154,10 @@ void Grid::clearFullLines()
 			{
 				grid[0][j] = 'E';
 			}
+			linesCleared++;
 		}
 	}
+	scoreManager.updateScore(linesCleared);
 }
 
 void Grid::resetGrid()

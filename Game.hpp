@@ -1,6 +1,5 @@
 #include "Constants.hpp"
 #include "Grid.hpp"
-#include "ScoreManager.hpp"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -9,7 +8,7 @@
 
 class Game {
 public:
-	Game(Grid& grid, ScoreManager& scoreManager);
+	Game(Grid& grid);
 	~Game() = default;
 	void initialize();
 	void render();
@@ -17,7 +16,6 @@ public:
 
 	Tetriminos generateRandomTetriminos();
 	void spawnTetriminos();
-	void fixActiveTetriminos();
 
 	void processInputs();
 	void updateDropLogic();
@@ -41,7 +39,7 @@ private:
 	sf::Clock dropClock;
 
 	sf::Font font;
-	sf::Text scoreText, levelText, pauseText, gameOverText, titleText;
+	sf::Text scoreText, levelText, pauseText, gameOverText, titleText, infoText;
 
 /*	sf::Texture windowTexture;
 	sf::Sprite windowBackground*/;

@@ -144,7 +144,6 @@
     <ClCompile Include="Tetriminos.cpp" />
     <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.hpp" />
@@ -152,7 +151,6 @@
     <ClInclude Include="Tetriminos.hpp" />
     <ClInclude Include="ScoreManager.hpp" />
     <ClInclude Include="Shape.hpp" />
-    <ClInclude Include="Utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
