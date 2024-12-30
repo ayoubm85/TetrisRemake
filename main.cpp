@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	Grid grid;
+	Grid grid(50, 100);
 	ScoreManager scoreManager;
 	Game game(grid, scoreManager);
 

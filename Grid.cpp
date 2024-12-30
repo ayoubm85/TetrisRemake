@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-Grid::Grid()
+Grid::Grid(int offsetX, int offsetY) : offsetX(offsetX), offsetY(offsetY)
 {
 	for (int i = 0; i < ROWS; i++)
 	{
@@ -32,7 +32,7 @@ void Grid::drawGrid(RenderWindow* window)
 		for (int j = 0; j < COLS; j++)
 		{
 			RectangleShape cell(Vector2f(CELL_SIZE, CELL_SIZE));
-			cell.setPosition(Vector2f(j * CELL_SIZE, i * CELL_SIZE));
+			cell.setPosition(Vector2f(offsetX + j * CELL_SIZE, offsetY + i * CELL_SIZE));
 
 			switch (grid[i][j][0])
 			{

@@ -156,9 +156,6 @@
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\..\..\OneDrive\Bureau\arial.ttf" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

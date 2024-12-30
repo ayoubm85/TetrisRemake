@@ -4,7 +4,7 @@
 
 class Grid {
 public:
-	Grid();
+	Grid(int offsetX, int offsetY);
 	~Grid() = default;
 	void setCell(int x, int y, string tetriminosType);
 	string getCell(int x, int y);
@@ -18,4 +18,5 @@ public:
 
 private:
 	string grid[ROWS][COLS];
+	int offsetX, offsetY;
 };

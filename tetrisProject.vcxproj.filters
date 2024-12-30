@@ -66,9 +66,4 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\..\..\OneDrive\Bureau\arial.ttf">
-      <Filter>Fichiers de ressources</Filter>
-    </Font>
-  </ItemGroup>
 </Project>

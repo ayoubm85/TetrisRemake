@@ -16,7 +16,8 @@ void Game::initialize()
 {
 	window.create(VideoMode({ WINDOW_WIDTH, WINDOW_HEIGHT }), "Tetris");
 
-	font.openFromFile("C:\\Users\\amarf\\Desktop\\ProjetTetris\\tetrisProject\\x64\\Debug\\8514oem.ttf");
+	font.openFromFile("arial.ttf");
+	
 
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(24);
@@ -43,7 +44,7 @@ void Game::initialize()
 	titleText.setFont(font);
 	titleText.setCharacterSize(48);
 	titleText.setFillColor(Color::White);
-	titleText.setPosition({ 100, 200 });
+	titleText.setPosition({ 250, 30 });
 	titleText.setString("TETRIS");
 
 	grid.resetGrid();
@@ -165,7 +166,6 @@ void Game::endGame()
 {
 	isGameOver = true;
 	window.draw(gameOverText);
-	cout << "Game Over" << endl;
 }
 
 void Game::updateDropLogic()
@@ -188,7 +188,13 @@ void Game::updateDropLogic()
 void Game::render() 
 {
 	window.clear();
-
+	sf::Texture windowTexture("abstract_pixel_design_3.jpg");
+	sf::Sprite windowBackground(windowTexture);
+	windowBackground.setScale(
+		{ static_cast<float>(WINDOW_WIDTH) / windowTexture.getSize().x,
+		static_cast<float>(WINDOW_HEIGHT) / windowTexture.getSize().y }
+	);
+	window.draw(windowBackground);
 	grid.addTetriminosToGrid(currentTetriminos);
 	grid.drawGrid(&window);
 	window.draw(scoreText);

@@ -3,6 +3,9 @@
 #include "ScoreManager.hpp"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
 
 class Game {
 public:
@@ -43,4 +46,7 @@ private:
 
 	sf::Font font;
 	sf::Text scoreText, levelText, pauseText, gameOverText, titleText;
+
+/*	sf::Texture windowTexture;
+	sf::Sprite windowBackground*/;
 };

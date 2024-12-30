@@ -7,8 +7,10 @@ using namespace std;
 constexpr int ROWS = 20;
 constexpr int COLS = 10;
 constexpr int CELL_SIZE = 30;
-constexpr int WINDOW_HEIGHT = ROWS * CELL_SIZE;
-constexpr int WINDOW_WIDTH = COLS * CELL_SIZE;
+constexpr int EXTRA_WIDTH = 350;  
+constexpr int EXTRA_HEIGHT = 200;
+constexpr int WINDOW_HEIGHT = ROWS * CELL_SIZE + EXTRA_HEIGHT;
+constexpr int WINDOW_WIDTH = COLS * CELL_SIZE + EXTRA_WIDTH;
 
 const vector<vector<int>> E = { {0, 0, 0, 0},
 								{0, 0, 0, 0},
