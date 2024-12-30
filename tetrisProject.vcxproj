@@ -140,7 +140,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.hpp" />
-    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tetriminos.cpp" />
     <ClCompile Include="ScoreManager.cpp" />
@@ -150,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="InputHandler.hpp" />
     <ClInclude Include="Tetriminos.hpp" />
     <ClInclude Include="ScoreManager.hpp" />
     <ClInclude Include="Shape.hpp" />

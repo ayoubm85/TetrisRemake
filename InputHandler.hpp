@@ -1,7 +1,0 @@
-
-class InputHandler {
-public:
-
-
-private:
-};

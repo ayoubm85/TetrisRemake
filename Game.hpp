@@ -19,16 +19,12 @@ public:
 	void spawnTetriminos();
 	void fixActiveTetriminos();
 
-	//void processGameInputs();
 	void processInputs();
 	void updateDropLogic();
 
-	void pauseGame();
-	void resumeGame();
 	void resetGame();
 	
-	bool checkGameOver();
-	void endGame();
+	void checkGameOver();
 
 private:
 	Grid grid;
