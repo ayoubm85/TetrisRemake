@@ -63,7 +63,7 @@ void Grid::drawGrid(RenderWindow* window)
 				cell.setFillColor(Color::Blue);
 				break;
 			case 'L':
-				cell.setFillColor(Color::White);
+				cell.setFillColor(purple);
 				break;
 			}
 			cell.setOutlineColor(Color::White);

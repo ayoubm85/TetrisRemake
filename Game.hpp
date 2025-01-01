@@ -24,6 +24,8 @@ public:
 	
 	void checkGameOver();
 
+	void renderNextTetriminos(sf::RenderWindow& window, const Tetriminos& nextTetriminos);
+
 private:
 	Grid grid;
 	ScoreManager scoreManager;
@@ -39,8 +41,5 @@ private:
 	sf::Clock dropClock;
 
 	sf::Font font;
-	sf::Text scoreText, levelText, pauseText, gameOverText, titleText, infoText;
-
-/*	sf::Texture windowTexture;
-	sf::Sprite windowBackground*/;
+	sf::Text scoreText, levelText, pauseText, gameOverText, titleText, infoText, nextTetriminosText;
 };

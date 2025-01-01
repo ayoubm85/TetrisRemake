@@ -9,7 +9,7 @@ using namespace std;
 using namespace sf;
 
 Game::Game(Grid& grid)
-	: grid(grid), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, ""), infoText(font, "")
+	: grid(grid), isGameOver(false), isGamePaused(false), scoreText(font, ""), levelText(font, ""), pauseText(font, ""), gameOverText(font, ""), titleText(font, ""), infoText(font, ""), nextTetriminosText(font, "")
 {
 	initialize();
 }
@@ -49,6 +49,12 @@ void Game::initialize()
 	titleText.setPosition({ 250, 20 });
 	titleText.setString("TETRIS");
 
+	nextTetriminosText.setFont(font);
+	nextTetriminosText.setCharacterSize(20);
+	nextTetriminosText.setFillColor(Color::White);
+	nextTetriminosText.setPosition({ 400, 270 });
+	nextTetriminosText.setString("NEXT TETRIMINOS");
+
 	infoText.setFont(font);
 	infoText.setCharacterSize(30);
 	infoText.setFillColor(Color::White);
@@ -63,14 +69,17 @@ void Game::initialize()
 
 Tetriminos Game::generateRandomTetriminos()
 {
-	const int randomIndex = rand() % SHAPES.size();
+	static random_device rd;  
+	static mt19937 gen(rd()); 
+	uniform_int_distribution<> dis(0, SHAPES.size() - 1);
+	const int randomIndex = dis(gen);
 	const vector<vector<int>> randomShape = SHAPES[randomIndex];
 	const Color randomColor = COLORS[randomIndex];
 	const char randomId = SHAPES_IDS[randomIndex];
 	return Tetriminos(ShapeTetriminos(randomShape, randomColor, randomId), 0, 3);
 }
 
-void Game::spawnTetriminos()
+void Game::spawnTetriminos()	
 {
 	grid.clearFullLines();
 	currentTetriminos = nextTetriminos;
@@ -165,6 +174,67 @@ void Game::updateDropLogic()
 	}
 }
 
+void Game::renderNextTetriminos(sf::RenderWindow& window, const Tetriminos& nextTetriminos) 
+{
+	const auto& shape = nextTetriminos.getShape();
+	const auto& color = shape.getColor();
+
+	int gridSize = 4;
+	int offsetX = 400;
+	int offsetY = 300;
+
+	int minX = 4, maxX = -1, minY = 4, maxY = -1;
+	for (int i = 0; i < 4; ++i) 
+	{
+		for (int j = 0; j < 4; ++j) 
+		{
+			if (shape.getShape()[i][j] == 1) 
+			{
+				if (i < minX) minX = i;
+				if (i > maxX) maxX = i;
+				if (j < minY) minY = j;
+				if (j > maxY) maxY = j;
+			}
+		}
+	}
+
+	for (int i = 0; i < gridSize; i++)
+	{
+		for (int j = 0; j < gridSize; j++)
+		{
+			sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
+			cell.setFillColor(sf::Color::Black); 
+			cell.setOutlineColor(sf::Color::White);   
+			cell.setOutlineThickness(1);              
+			cell.setPosition({ static_cast<float>(offsetX + i * CELL_SIZE), static_cast<float>(offsetY + j * CELL_SIZE) });
+			window.draw(cell);
+		}
+	}
+
+	int tetriminosWidth = maxY - minY + 1;  
+	int tetriminosHeight = maxX - minX + 1; 
+	int centerX = (gridSize - tetriminosHeight) / 2;
+	int centerY = (gridSize - tetriminosWidth) / 2;
+
+	for (int i = 0; i < shape.getShape().size(); i++)
+	{
+		for (int j = 0; j < shape.getShape().size(); j++)
+		{
+			if (shape.getShape()[i][j] == 1)
+			{
+				sf::RectangleShape block(sf::Vector2f(CELL_SIZE, CELL_SIZE));
+				block.setFillColor(color);
+				block.setPosition({ static_cast<float>(offsetX + (centerY + j) * CELL_SIZE), static_cast<float>(offsetY + (centerX + i) * CELL_SIZE) });
+				block.setOutlineColor(sf::Color::White); 
+				block.setOutlineThickness(1);         
+
+				window.draw(block);
+			}
+		}
+	}
+}
+
+
 void Game::render() 
 {
 	window.clear();
@@ -180,6 +250,9 @@ void Game::render()
 
 	grid.addTetriminosToGrid(currentTetriminos);
 	grid.drawGrid(&window);
+
+	window.draw(nextTetriminosText);
+	renderNextTetriminos(window, nextTetriminos);
 
 	scoreText.setString(format("SCORE: {}", grid.getScoreManager().getScore()));
 	levelText.setString(format("LEVEL: {}", grid.getScoreManager().getLevel()));

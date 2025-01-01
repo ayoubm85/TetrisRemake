@@ -13,6 +13,8 @@ int main()
 	Grid* grid = new Grid(50, 100, *scoreManager);
 	Game* game = new Game(*grid);
 
+
+
 	game->run();
 
 	delete game;
