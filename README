@@ -1,0 +1,99 @@
+# Tetris Project
+
+## Description
+This project is an implementation of the classic Tetris game using C++ and the SFML library for graphics and user inputs.
+
+## Features
+- Classic Tetris gameplay
+- Score and level management
+- Progressive acceleration of falling pieces
+- Pause and resume functionality
+- Custom graphical interface 
+
+## Prerequesites
+To compile and run this project, you will need:
+- C++20
+- SFML 3.0.0
+- A C++20-compatible compiler (such as GCC, Clang, or Visual Studio)
+- Proper library configuration to link SFML:
+    - Required SFML libraries:
+        - sfml-graphics
+        - sfml-window
+        - sfml-system
+
+Note: Ensure SFML is correctly installed on your system. For more information, refer to the official SFML documentation.
+
+## Installation
+1. Clone the repository:
+    ```
+    git clone https://github.com/Anis13200/tetrisProject.git
+    ```
+2. Navigate to the project directory:
+    ```
+    cd tetrisProject
+    ```
+3. Install SFML on your system:
+    - Follow the instructions specific to your operation system:
+        - Windows: Download SFML from the official site and configure it in Visual Studio.
+        - Linux: Install SFML via your package manager (e.g., sudo apt install libsfml-dev on Ubuntu).
+        - MacOS: Use Homebrew: brew install sfml.
+
+## Compilation 
+With Visual Studio:
+1. Open the solution file in Visual Studio.
+2. Configure the include directories and library directories for SFML in the project settings.
+3. Build and run the project.
+
+With a command-line compiler (e.g., GCC):
+1. Ensure SFML is installed and accessible.
+2. Compile the project:
+    ```
+    g++ -std=c++20 -o tetris main.cpp Game.cpp Grid.cpp -lsfml-graphics -lsfml-window -lsfml-system
+    ```
+3. Run the executable:
+    ```
+    ./tetrisProject
+    ```
+
+## Usage
+After compiling and running the game, use the following controls to play:
+- Left Arrow: Move the piece to the left.
+- Right Arrow: Move the piece to the right.
+- Down Arrow: Accelerate the piece's descent.
+- L : Rotate the piece clockwise.
+- J : Rotate the piece counterclockwise
+- Space: Pause, resume or restart the game.
+
+Game objective:
+- Stack the pieces (Tetriminos) to form complete horizontal lines. The more lines you clear simultaeously, the more points you earn:
+    - 1 line: 40 x (level + 1) points
+    - 2 lines: 100 x (level + 1) points
+    - 3 lines: 300 x (level + 1) points
+    - 4 lines: 1200 x (level + 1) points
+- The game speeds up as you progress through levels (every 10 lines cleared), making it more challenging to stack the pieces.
+
+## Project Structure
+The project is organized as follows:
+- main.cpp: The main entry point of the program.
+- Game.cpp: The main game logic and rendering.
+- Grid.cpp: The grid representation and manipulation.
+- Shape.cpp: The Tetrimino shapes and their identifications.
+- Piece.cpp: The Tetrimino representation and manipulation.
+- Score.cpp: The score and level management.
+- Constants.hpp: Constants used throughout the project.
+
+## License
+This project is licensed under the MIT License, meaning you are free to use, modify, and distribute this project, as long as you credit the original author. 
+For more information, refer to the LICENSE file.
+
+## Authors
+- Anis Gadouche
+- Ayoub Marfouk
+
+## Acknowledgements
+- Special thanks to the SFML team for providing a simple and efficient library for 2D graphics and user inputs.
+- Inspired by the original Tetris game created by Alexey Pajitnov in 1984.
+
+
+
+
