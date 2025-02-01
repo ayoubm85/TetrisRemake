@@ -106,4 +106,4 @@ Refer to the [LICENSE](LICENSE) file for more details.
 
 ---
 
-🚀 *Made with ❤️ by [Anis13200](https://github.com/Anis13200) & Ayoub Marfouk.*
+🚀 *Made by [Anis13200](https://github.com/Anis13200) & Ayoub Marfouk.*
