@@ -92,12 +92,6 @@ After compiling and running the game, use the following controls:
  ├── 📄 Constants.hpp   # Project-wide constants
 ```
 
-## 📸 Preview (Optional)
-*(Add a screenshot or a GIF of your game running)*
-```md
-![Tetris Gameplay](https://your-image-url.com/tetris-game.gif)
-```
-
 ## 📝 License
 This project is licensed under the **MIT License**, meaning you are free to use, modify, and distribute this project as long as you credit the original author.  
 Refer to the [LICENSE](LICENSE) file for more details.
