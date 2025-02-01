@@ -80,18 +80,6 @@ After compiling and running the game, use the following controls:
     - 4⃣ lines: **1200 × (level + 1) points**
 - The game speeds up every **10 lines cleared**, making it more challenging.
 
-## 📂 Project Structure
-```
-📚 tetrisProject
- ├── 📄 main.cpp        # Main entry point
- ├── 📄 Game.cpp        # Game logic & rendering
- ├── 📄 Grid.cpp        # Grid representation
- ├── 📄 Shape.cpp       # Tetrimino shapes & IDs
- ├── 📄 Piece.cpp       # Tetrimino movement
- ├── 📄 Score.cpp       # Score & level management
- ├── 📄 Constants.hpp   # Project-wide constants
-```
-
 ## 📝 License
 This project is licensed under the **MIT License**, meaning you are free to use, modify, and distribute this project as long as you credit the original author.  
 Refer to the [LICENSE](LICENSE) file for more details.
