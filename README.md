@@ -67,8 +67,8 @@ After compiling and running the game, use the following controls:
 - ⬅️ **Left Arrow**: Move the piece to the left.
 - ➡️ **Right Arrow**: Move the piece to the right.
 - ⬇️ **Down Arrow**: Accelerate the piece's descent.
-- 🔄 **L**: Rotate the piece clockwise.
-- 🔁 **J**: Rotate the piece counterclockwise.
+- 🔁 **L**: Rotate the piece clockwise.
+- 🔄 **J**: Rotate the piece counterclockwise.
 - ⏸️ **Space**: Pause, resume, or restart the game.
 
 🏆 **Game Objective**
